@@ -2,15 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import { UploadCloud, ChevronRight, Save, Shield, X, AlertCircle, Eye, EyeOff, CheckCircle, Loader2 } from 'lucide-react';
 import { Toggle } from '../components/Toggle.jsx';
 import { useAppContext } from '../context/AppContext.jsx';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import '../admin-pages.css';
 
 export default function Settings() {
   const { addNotification, sessionTimeout, setSessionTimeout, customTimeout, setCustomTimeout } = useAppContext();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [saveState, setSaveState]               = useState('idle');
   const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const [showEmergencyModal, setShowEmergencyModal] = useState(false);
   const [showCustomInput, setShowCustomInput]   = useState(false);
   const [customTimeoutInput, setCustomTimeoutInput] = useState('');
   const [passwordForm, setPasswordForm]         = useState({ old: '', new: '', confirm: '' });
@@ -247,7 +247,7 @@ export default function Settings() {
                 </div>
               </div>
               <div className="ap-notif-divider">
-                <button type="button" onClick={() => setShowEmergencyModal(true)} className="ap-notif-expand">
+                <button type="button" onClick={() => navigate('/security/emergency')} className="ap-notif-expand">
                   <span>Emergency Broadcast Options</span>
                   <ChevronRight size={16} />
                 </button>
@@ -313,19 +313,6 @@ export default function Settings() {
         </div>
       )}
 
-      {/* Emergency Modal */}
-      {showEmergencyModal && (
-        <div className="ap-modal-overlay">
-          <div className="ap-modal ap-modal-sm">
-            <div className="ap-modal-center">
-              <div className="ap-modal-warn-icon"><AlertCircle size={28} /></div>
-              <div className="ap-modal-center-title">Emergency Broadcast</div>
-              <div className="ap-modal-center-body">This page is yet to be routed.</div>
-              <button onClick={() => setShowEmergencyModal(false)} className="ap-btn-primary" style={{ margin: '0 auto' }}>Close</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
