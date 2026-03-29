@@ -194,7 +194,7 @@ const RegisterOrg = () => {
         if (!validateReviewStep()) return;
         setIsLoading(true);
         try {
-            await authService.register({
+            const data = await authService.register({
                 orgName: formData.orgName,
                 orgType: formData.orgType,
                 orgEmail: formData.orgEmail,
@@ -210,15 +210,18 @@ const RegisterOrg = () => {
                 password: formData.password,
             }, logoFile);
             setShowSuccess(true);
-            toast.success('Account Created Successfully!');
+            if (data.message) {
+                toast.success(data.message);
+            } else {
+                toast.success('Registration completed successfully.');
+            }
             setTimeout(() => navigate('/login'), 4000);
         } catch (err) {
             const msg = err.response?.data?.message || err.response?.data?.error;
-            if (msg) toast.error(msg);
-            else {
-                toast.success('Account Created Successfully! (offline mode)');
-                setShowSuccess(true);
-                setTimeout(() => navigate('/login'), 4000);
+            if (msg) {
+                toast.error(msg);
+            } else {
+                toast.error('Registration failed. Please try again.');
             }
         } finally {
             setIsLoading(false);
