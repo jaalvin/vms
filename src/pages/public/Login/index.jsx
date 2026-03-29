@@ -114,7 +114,6 @@ const Login = () => {
                 setRedirectData({ user: mockUser, roleId: serverRole });
             }
         } catch (err) {
-            console.error('Login error:', err);
             const msg = err.response?.data?.message || err.response?.data?.error;
             if (msg) {
                 toast.error(msg);
