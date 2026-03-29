@@ -124,7 +124,7 @@ const Login = () => {
                     setErrors({ password: msg });
                 }
             } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network')) {
-                toast.error('Login failed. Please check your credentials and try again, or contact support if the issue persists.');
+                toast.error('Unable to connect to authentication server. Please check your network and try again.');
             } else {
                 toast.error('Login failed. Please try again.');
             }
