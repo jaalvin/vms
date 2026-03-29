@@ -114,6 +114,7 @@ const Login = () => {
                 setRedirectData({ user: mockUser, roleId: serverRole });
             }
         } catch (err) {
+            console.error('Login error:', err);
             const msg = err.response?.data?.message || err.response?.data?.error;
             if (msg) {
                 toast.error(msg);
@@ -123,7 +124,7 @@ const Login = () => {
                     setErrors({ password: msg });
                 }
             } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network')) {
-                toast.error('Unable to connect to authentication server. Please check your network and try again.');
+                toast.error('Login failed. Please check your credentials and try again, or contact support if the issue persists.');
             } else {
                 toast.error('Login failed. Please try again.');
             }
