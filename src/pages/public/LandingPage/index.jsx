@@ -10,6 +10,7 @@ import AboutUsSection from '../../../components/landing/AboutUsSection';
 import FAQSection from '../../../components/landing/FAQSection';
 import ContactSection from '../../../components/landing/ContactSection';
 import Footer from '../../../components/landing/Footer';
+import axios from 'axios';
 
 const LandingPage = () => {
     useScrollReveal();
