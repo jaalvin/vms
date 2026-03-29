@@ -17,6 +17,13 @@ const LandingPage = () => {
     const [showBackToTop, setShowBackToTop] = useState(false);
 
     useEffect(() => {
+        const backendTest=async()=> {
+            const re = await axios.get('https://visitor-management-system-backend-zag1.onrender.com/api/visitors', {withCredentials: true});
+        
+        console.log('Backend test response:', re.data);
+        };
+
+            backendTest();
         const handleScroll = () => {
             setScrolled(window.scrollY > 20);
             setShowBackToTop(window.scrollY > 600);

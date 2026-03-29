@@ -110,8 +110,8 @@ const Login = () => {
                 setShowMfa(true);
                 toast.success('Credentials verified. Please enter your 2FA code.', { icon: '🔐' });
             } else {
-                const mockUser = { fullName, initials };
-                setRedirectData({ user: mockUser, roleId: serverRole });
+                const userFromServer = data.user || { fullName, initials };
+                setRedirectData({ user: userFromServer, roleId: serverRole });
             }
         } catch (err) {
             const msg = err.response?.data?.message || err.response?.data?.error;
@@ -123,7 +123,9 @@ const Login = () => {
                     setErrors({ password: msg });
                 }
             } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network')) {
-                toast.error('Network error. Please try again.');
+                toast.error('Unable to connect to authentication server. Please check your network and try again.');
+            } else {
+                toast.error('Login failed. Please try again.');
             }
         } finally {
             setIsLoading(false);
@@ -138,18 +140,17 @@ const Login = () => {
 
         setIsLoading(true);
         try {
-            await new Promise(r => setTimeout(r, 1200));
+            const data = await authService.verifyMfa(code); // implement in backend as needed
             toast.dismiss();
-            toast.success('Identity Verified!', { icon: '✨' });
-
-            const fullName = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-            const mockUser = {
-                fullName,
-                initials: getInitials(fullName, email)
-            };
-            setRedirectData({ user: mockUser, roleId: 'admin' });
+            if (data.success) {
+                toast.success(data.message || 'Identity Verified!', { icon: '✨' });
+                const userFromServer = data.user || { fullName: '', initials: '' };
+                setRedirectData({ user: userFromServer, roleId: data.role || 'admin' });
+            } else {
+                toast.error(data.message || 'Invalid code. Please try again.');
+            }
         } catch (err) {
-            toast.error('Invalid code. Please try again.');
+            toast.error(err.response?.data?.message || err.message || 'Invalid code. Please try again.');
         } finally {
             setIsLoading(false);
         }

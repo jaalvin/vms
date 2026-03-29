@@ -37,6 +37,7 @@ const authService = {
     login: async (email, password, role) => {
         const payload = role ? { email, password, role } : { email, password };
         const { data } = await api.post('/auth/login', payload);
+        console.log('Login successful:', data);
         return data;
     },
 
@@ -108,6 +109,14 @@ const authService = {
      */
     microsoftLogin: async (msToken) => {
         const { data } = await api.post('/auth/microsoft-login', { token: msToken });
+        return data;
+    },
+
+    /**
+     * POST /api/auth/verify-mfa
+     */
+    verifyMfa: async (code) => {
+        const { data } = await api.post('/auth/verify-mfa', { code });
         return data;
     },
 
