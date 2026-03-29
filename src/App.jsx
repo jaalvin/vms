@@ -37,8 +37,13 @@ import EmergencyMode from './recept/pages/security/EmergencyMode.jsx';
 
 import ProtectedRoute from './components/common/ProtectedRoute';
 
-// Root route should show the landing page (initial app entry)
+// If already logged in, redirect "/" to the correct panel
 function RootRedirect() {
+  const { user } = useAuth();
+  if (!user) return <LandingPage />;
+  if (user.role === 'admin') return <Navigate to="/admin/dashboard" replace />;
+  if (user.role === 'receptionist') return <Navigate to="/receptionist/appointments" replace />;
+  if (user.role === 'security') return <Navigate to="/security/monitor" replace />;
   return <LandingPage />;
 }
 
