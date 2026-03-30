@@ -1,11 +1,11 @@
 {
   "name": "vms-backend",
   "version": "1.0.0",
-  "main": "backend/server.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
