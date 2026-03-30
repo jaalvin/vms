@@ -93,7 +93,9 @@ const Login = () => {
 
         setIsLoading(true);
         try {
+            console.log('Attempting login with:', { email, password: '***' });
             const data = await authService.login(email, password);
+            console.log('Login response:', data);
              
             const serverRole = data.role;
             const fullName = data.user?.fullName || email.split('@')[0];
