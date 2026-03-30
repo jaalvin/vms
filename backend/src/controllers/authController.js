@@ -14,7 +14,7 @@ export const register = async (req, res) => {
     const payload =
       typeof req.body.data === "string" ? JSON.parse(req.body.data) : req.body;
     const { organization, fullName, email, phone, password } = payload;
-    const { name, address, type, phone, maxVisitDuration, photoCapture } = organization;
+    const { name, address, type, orgPhone, maxVisitDuration, photoCapture } = organization;
 
     if (!name || !fullName || !email || !password) {
       if (logo?.filename) await cloudinary.uploader.destroy(logo.filename);
