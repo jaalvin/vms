@@ -3,7 +3,7 @@ import { createServer } from "http";
 import app from "./app.js";
 import connectDB from "./config/connectDB.js";
 
-dotenv.config({ path: "backend/.env" });
+dotenv.config();
 
 const startServer = async () => {
   await connectDB();
