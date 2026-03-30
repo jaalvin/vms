@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://visitor-management-system-backend-zag1.onrender.com/api',
+  baseURL: 'https://vms-d4n4.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
